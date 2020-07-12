@@ -141,7 +141,12 @@
                 // console.log(key, keyPath);
             },
             logout(){
-                window.location.href = "../login.html";
+                // 发送请求，通知后台（销毁session），退出
+                axios.get(app_path+"/user/logout.do").then((response)=>{
+                    if (response.data.flag){
+                        window.location.href = "../login.html";
+                    }
+                });
             },
             isClossTabFun() {
                 if (!this.isCollapse) {

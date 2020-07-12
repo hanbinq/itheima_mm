@@ -1,5 +1,6 @@
 package com.itheima.mm.service.impl;
 
+import com.itheima.framework.annotation.HmComponent;
 import com.itheima.mm.dao.UserDao;
 import com.itheima.mm.database.SqlSessionUtils;
 import com.itheima.mm.pojo.User;
@@ -11,6 +12,7 @@ import org.apache.ibatis.session.SqlSession;
  * 用户业务实现类
  */
 @Slf4j
+@HmComponent("userService")
 public class UserServiceImpl implements UserService {
     @Override
     public User findUserByUsername(String username) {
@@ -19,7 +21,6 @@ public class UserServiceImpl implements UserService {
         SqlSession sqlSession = SqlSessionUtils.openSession();
         UserDao userDao = sqlSession.getMapper(UserDao.class);
         User user = userDao.selectUserByUsername(username);
-        log.debug("user:{}---",user);
         return user;
     }
 }
