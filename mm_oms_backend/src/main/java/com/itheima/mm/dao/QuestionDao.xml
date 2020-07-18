@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itheima.mm.dao.QuestionDao">
+    <sql id="select_where_by_page">
+        <where>
+            <if test="queryParams.courseId != null">
+                and tq.course_id = #{queryParams.courseId}
+            </if>
+            <if test="queryParams.isClassic != null">
+                and tq.is_classic = #{queryParams.isClassic}
+            </if>
+        </where>
+    </sql>
+    <select id="selectListByPage" resultType="com.itheima.mm.pojo.Question">
+        SELECT tq.id,(1000+tq.id) as number,
+ 			   (select c.name from t_course c where c.id = tq.course_id ) as courseName,
+ 			   type,
+ 			   `subject`,
+ 			   tq.create_date as createDate,
+ 			   difficulty,
+ 			   (SELECT  count(*) FROM tr_member_question tmq WHERE tmq.question_id = tq.id ) as usedQty,
+ 			   (select u.username from t_user u where u.id = tq.user_id) as creator,
+ 			   tq.`status`
+        FROM t_question tq
+        <include refid="select_where_by_page"/>
+        limit #{offset},#{pageSize};
+    </select>
+
+    <select id="selectCount" resultType="java.lang.Long">
+        SELECT count(*)
+        FROM t_question tq
+        <include refid="select_where_by_page"/>;
+    </select>
+
+
+</mapper>
