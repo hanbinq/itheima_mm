@@ -418,9 +418,9 @@
                 this.pagination.pageNum = val;
                 this.getList();
             },
-            // 新增试题
+            // 新增试题  ?questionId=0&is_classic=" + this.is_classic
             handleCreate() {
-                window.location.href = "questionEditor.html?questionId=0&is_classic=" + this.is_classic;
+                window.location.href = "questionEditor.html";
             },
             // 预览试题
             handlePreview(row) {

@@ -27,4 +27,10 @@ public interface CourseDao {
      * @param course
      */
     void updateCourse(Course course);
+
+    /**
+     * 获取学科列表
+     * @return
+     */
+    List<Course> selectListAll();
 }

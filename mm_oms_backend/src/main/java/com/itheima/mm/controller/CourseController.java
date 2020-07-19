@@ -23,6 +23,7 @@ import javax.sql.DataSource;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author ：jing.liang
@@ -88,10 +89,22 @@ public class CourseController extends BaseController {
             // 调用Service
             courseService.updateCourse(course);
             // 返回Json
-            printResult(response, new Result(true,"修改成功"));
+            printResult(response, new Result(true, "修改成功"));
         } catch (RuntimeException e) {
             e.printStackTrace();
             printResult(response, new Result(false, "修改学科失败"));
+        }
+    }
+
+    @HmRequestMapping("/course/findListAll")
+    public void findListForQuestion(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        try {
+            // 调用Service
+            List<Course> courseList = courseService.findListAll();
+            // 响应JSON
+            printResult(response, new Result(true, "查询成功", courseList));
+        } catch (RuntimeException e) {
+            e.printStackTrace();
         }
     }
 }

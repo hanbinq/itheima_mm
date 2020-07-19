@@ -479,7 +479,7 @@
             // 学科下拉列表
             initCourses() {
                 let t = this;
-                let response = {
+                /*let response = {
                     data:{
                         "flag": true,
                         "message": "获取列表成功",
@@ -572,8 +572,13 @@
                             }
                         ]
                     }
-                }
-                t.courses = response.data.result;
+                }*/
+
+                axios.get(app_path+"/course/findListAll.do").then((response)=>{
+                    if (response.data.flag){
+                        t.courses = response.data.result;
+                    }
+                });
             },
             changeCourse() {
                 let courseId = this.formData.courseId;
@@ -590,7 +595,7 @@
             // 企业下拉列表
             initCompanys() {
                 let t = this;
-                let response = {
+                /*let response = {
                     data:{
                         "flag": true,
                         "message": "获取成功",
@@ -638,10 +643,15 @@
                             }
                         ]
                     }
-                }
-                t.companys = response.data.result;
-                // 初始化试题(初始化公司时，需要在初始化公司之后再初始化)
-                this.initQuestionById()
+                }*/
+
+                axios.get(app_path+"/company/findListAll.do").then((response)=>{
+                    if (response.data.flag){
+                        t.companys = response.data.result;
+                        // 初始化试题(初始化公司时，需要在初始化公司之后再初始化)
+                        this.initQuestionById();
+                    }
+                });
             },
             changeCompany(val) {
                 let companyId = this.formData.companyId;
@@ -758,7 +768,7 @@
             // 方向下拉列表
             initIndustrys() {
                 let t = this;
-                let response = {
+                /*let response = {
                     data: {
                         "flag": true,
                         "message": "获取成功",
@@ -777,8 +787,13 @@
                             }
                         ]
                     }
-                }
-                t.industrys = response.data.result;
+                }*/
+
+                axios.get(app_path+"/industry/findListAll.do").then((response)=>{
+                    if (response.data.flag){
+                        t.industrys = response.data.result;
+                    }
+                });
             },
             // 切换题型，重置选项选中状态
             changeType(val) {
@@ -894,18 +909,26 @@
                 formData.tagList = tagList;
                 console.log("新增更新题库请求参数：");
                 console.log(this.formData);
-                this.$message.success("操作成功");
-                // 返回到上一级
-                if (!this.formData.is_classic) {
-                    setTimeout(function () {
-                            //window.location.href = "questionBasicList.html";
+
+                // 提交请求
+                axios.post(app_path+"/question/addOrUpdate.do", formData).then((response)=>{
+                    if (response.data.flag){
+                        this.$message.success("操作成功");
+                        // 返回到上一级
+                        if (!this.formData.is_classic) {
+                            setTimeout(function () {
+                                    //window.location.href = "questionBasicList.html";
+                                }
+                                , 1000);
+                        } else {
+                            setTimeout(function () {
+                                //window.location.href = "questionClassicList.html";
+                            }, 1000);
                         }
-                        , 1000);
-                } else {
-                    setTimeout(function () {
-                        //window.location.href = "questionClassicList.html";
-                    }, 1000);
-                }
+                    }else {
+                        this.$message.error(response.data.message);
+                    }
+                });
             },
             // 取消提交
             cancelItem() {

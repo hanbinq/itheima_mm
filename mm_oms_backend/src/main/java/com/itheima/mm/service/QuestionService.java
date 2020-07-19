@@ -2,6 +2,7 @@ package com.itheima.mm.service;
 
 import com.itheima.mm.entity.PageResult;
 import com.itheima.mm.entity.QueryPageBean;
+import com.itheima.mm.pojo.Question;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -10,5 +11,11 @@ import org.apache.ibatis.annotations.Param;
  * @description ：题库业务接口
  */
 public interface QuestionService {
-    PageResult findListByPage(@Param("queryPageBean") QueryPageBean queryPageBean);
+    PageResult findListByPage(QueryPageBean queryPageBean);
+
+    /**
+     * 保存题目信息
+     * @param question
+     */
+    void addOrUpdate(Question question);
 }

@@ -34,4 +34,24 @@
             </if>
         </where>
     </select>
+
+    <resultMap id="mapForAllList" type="Course">
+        <id column="id" property="id"/>
+        <collection property="catalogList"
+                    javaType="ArrayList"
+                    ofType="Catalog"
+                    column="id"
+                    select="com.itheima.mm.dao.CatalogDao.selectCatalogListByCourseId"/>
+        <collection property="tagList"
+                    javaType="ArrayList"
+                    ofType="Course"
+                    column="id"
+                    select="com.itheima.mm.dao.TagDao.selectTagListByCourseId"/>
+    </resultMap>
+
+    <select id="selectListAll" resultMap="mapForAllList">
+        select id,name from t_course;
+    </select>
+
+
 </mapper>

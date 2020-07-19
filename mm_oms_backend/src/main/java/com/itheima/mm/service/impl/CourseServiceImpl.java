@@ -78,4 +78,20 @@ public class CourseServiceImpl extends BaseService implements CourseService {
             throw new MmDaoException(e.getMessage());
         }
     }
+
+    @Override
+    public List<Course> findListAll() {
+        // 调用Dao
+        try{
+            SqlSession sqlSession = getSession();
+            CourseDao courseDao = getDao(sqlSession, CourseDao.class);
+            List<Course> courseList = courseDao.selectListAll();
+            sqlSession.close();
+            return courseList;
+        }catch (MmDaoException e){
+            e.printStackTrace();
+            log.error("",e);
+            throw new MmDaoException(e.getMessage());
+        }
+    }
 }

@@ -24,4 +24,16 @@ public interface QuestionDao {
      * @return
      */
     Long selectCount(QueryPageBean pageBean);
+
+    /**
+     * 新增题目
+     * @param question
+     */
+    void add(Question question);
+
+    /**
+     * 更新题目
+     * @param question
+     */
+    void update(Question question);
 }

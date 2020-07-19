@@ -32,5 +32,4 @@ public class Course {
   private Integer tagQty;     // 学科标签数量
   private Integer questionQty; // 题目数量
   private String title;
-
 }
